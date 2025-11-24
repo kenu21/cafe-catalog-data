@@ -1,0 +1,43 @@
+CREATE TABLE Cities (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Streets (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    city_id BIGINT UNSIGNED NOT NULL,
+    FOREIGN KEY (city_id) REFERENCES Cities(id)
+);
+
+CREATE TABLE Addresses (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    street_id BIGINT UNSIGNED NOT NULL,
+    building_number VARCHAR(20) NOT NULL,
+    FOREIGN KEY (street_id) REFERENCES Streets(id)
+);
+
+CREATE TABLE Tags (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Cafes (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    photo_link VARCHAR(255) NOT NULL,
+    price_rating TINYINT UNSIGNED NOT NULL,
+    opening_hours VARCHAR(255) NOT NULL,     
+    rating DECIMAL(2,1) NOT NULL,
+    votes_count INT UNSIGNED NOT NULL,
+    address_id BIGINT UNSIGNED NOT NULL,
+    FOREIGN KEY (address_id) REFERENCES Addresses(id)
+);
+
+CREATE TABLE Cafes_Tags (
+    cafe_id BIGINT UNSIGNED NOT NULL,
+    tag_id BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (cafe_id, tag_id),
+    FOREIGN KEY (cafe_id) REFERENCES Cafes(id),
+    FOREIGN KEY (tag_id) REFERENCES Tags(id)
+);
