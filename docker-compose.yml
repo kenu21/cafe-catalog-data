@@ -1,6 +1,6 @@
 services:
   db:
-    image: mysql:8
+    image: mysql:8.0.35
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -10,3 +10,12 @@ services:
       - "${MYSQL_LOCAL_PORT}:${MYSQL_CONTAINER_PORT}"
     volumes:
       - "${MYSQL_DATA_PATH}:/var/lib/mysql"
+
+  flyway:
+    image: flyway/flyway:11.17.1
+    command: -configFiles=/flyway/conf/flyway.conf migrate
+    volumes:
+      - ./flyway/sql:/flyway/sql
+      - ./flyway/conf:/flyway/conf
+    depends_on:
+      - db
