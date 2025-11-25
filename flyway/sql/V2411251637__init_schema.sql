@@ -1,28 +1,28 @@
-CREATE TABLE Cities (
+CREATE TABLE cities (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Streets (
+CREATE TABLE streets (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     city_id BIGINT UNSIGNED NOT NULL,
-    FOREIGN KEY (city_id) REFERENCES Cities(id)
+    FOREIGN KEY (city_id) REFERENCES cities(id)
 );
 
-CREATE TABLE Addresses (
+CREATE TABLE addresses (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     street_id BIGINT UNSIGNED NOT NULL,
     building_number VARCHAR(20) NOT NULL,
-    FOREIGN KEY (street_id) REFERENCES Streets(id)
+    FOREIGN KEY (street_id) REFERENCES streets(id)
 );
 
-CREATE TABLE Tags (
+CREATE TABLE tags (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE Cafes (
+CREATE TABLE cafes (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     photo_link VARCHAR(255) NOT NULL,
@@ -31,13 +31,13 @@ CREATE TABLE Cafes (
     rating DECIMAL(2,1) NOT NULL,
     votes_count INT UNSIGNED NOT NULL,
     address_id BIGINT UNSIGNED NOT NULL,
-    FOREIGN KEY (address_id) REFERENCES Addresses(id)
+    FOREIGN KEY (address_id) REFERENCES addresses(id)
 );
 
-CREATE TABLE Cafes_Tags (
+CREATE TABLE cafes_tags (
     cafe_id BIGINT UNSIGNED NOT NULL,
     tag_id BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY (cafe_id, tag_id),
-    FOREIGN KEY (cafe_id) REFERENCES Cafes(id),
-    FOREIGN KEY (tag_id) REFERENCES Tags(id)
+    FOREIGN KEY (cafe_id) REFERENCES cafes(id),
+    FOREIGN KEY (tag_id) REFERENCES tags(id)
 );

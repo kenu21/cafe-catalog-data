@@ -6,22 +6,21 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    command: --default-authentication-plugin=mysql_native_password
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --local-infile=1
     ports:
       - "${MYSQL_LOCAL_PORT}:${MYSQL_CONTAINER_PORT}"
-    volumes:
-      - "${MYSQL_DATA_PATH}:/var/lib/mysql"
 
   flyway:
     image: flyway/flyway:11.17.1
     environment:
-      FLYWAY_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false
+      FLYWAY_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
       FLYWAY_USER: ${MYSQL_USER}
       FLYWAY_PASSWORD: ${MYSQL_PASSWORD}
-
-    command: -configFiles=/flyway/conf/flyway.conf migrate
     volumes:
       - ./flyway/sql:/flyway/sql
       - ./flyway/conf:/flyway/conf
+      - ./flyway/csv:/flyway/csv
     depends_on:
       - db
