@@ -11,6 +11,8 @@ services:
       --local-infile=1
     ports:
       - "${MYSQL_LOCAL_PORT}:${MYSQL_CONTAINER_PORT}"
+    networks:
+      - cafenet
 
   flyway:
     image: flyway/flyway:11.17.1
@@ -24,3 +26,10 @@ services:
       - ./flyway/csv:/flyway/csv
     depends_on:
       - db
+    networks:
+      - cafenet
+    command: ["migrate"]
+
+networks:
+  cafenet:
+    name: cafenet
