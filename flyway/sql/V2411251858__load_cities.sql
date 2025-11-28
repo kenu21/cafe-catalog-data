@@ -1,0 +1,6 @@
+LOAD DATA LOCAL INFILE '/flyway/csv/cities.csv'
+INTO TABLE cities
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 LINES
+(id,name);
