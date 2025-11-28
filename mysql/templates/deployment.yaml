@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafee-mysql-deployment
+  namespace: {{ .Values.namespaceName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cafee-mysql
+  template:
+    metadata:
+      labels:
+        app: cafee-mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0.44-debian
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.mysql.rootPassword }}
+            - name: MYSQL_DATABASE
+              value: {{ .Values.mysql.database }}
+            - name: MYSQL_USER
+              value: {{ .Values.mysql.user }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.mysql.password }}
+          command:
+            - "mysqld"
+            - "--default-authentication-plugin=mysql_native_password"
+            - "--local-infile=1"
+          ports:
+            - containerPort: {{ .Values.mysql.containerPort }}
+        - name: flyway
+          image: flyway/flyway:11.17.2-alpine
+          env:
+            - name: FLYWAY_URL
+              value: jdbc:mysql://localhost:{{ .Values.mysql.containerPort }}/{{ .Values.mysql.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
+            - name: FLYWAY_USER
+              value: {{ .Values.mysql.user }}
+            - name: FLYWAY_PASSWORD
+              value: {{ .Values.mysql.password }}
+          volumeMounts:
+            - name: flyway-sql
+              mountPath: /flyway/sql
+            - name: flyway-conf
+              mountPath: /flyway/conf
+            - name: flyway-csv
+              mountPath: /flyway/csv
+          command: ["migrate"]
+      volumes:
+        - name: flyway-sql
+          hostPath:
+            path: ./flyway/sql
+        - name: flyway-conf
+          hostPath:
+            path: ./flyway/conf
+        - name: flyway-csv
+          hostPath:
+            path: ./flyway/csv

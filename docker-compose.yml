@@ -1,0 +1,37 @@
+services:
+  db:
+    image: mysql:8.0.44-debian
+    container_name: mysql-db-cafee
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --local-infile=1
+    ports:
+      - "${MYSQL_LOCAL_PORT}:${MYSQL_CONTAINER_PORT}"
+    networks:
+      - cafenet
+
+  flyway:
+    image: flyway/flyway:11.17.2-alpine
+    container_name: flyway-cafee
+    environment:
+      FLYWAY_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
+      FLYWAY_USER: ${MYSQL_USER}
+      FLYWAY_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./flyway/sql:/flyway/sql
+      - ./flyway/conf:/flyway/conf
+      - ./flyway/csv:/flyway/csv
+    depends_on:
+      - db
+    networks:
+      - cafenet
+    command: ["migrate"]
+
+networks:
+  cafenet:
+    name: cafenet
