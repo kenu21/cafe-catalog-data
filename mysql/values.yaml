@@ -1,0 +1,8 @@
+namespaceName: mysql-ns
+
+mysql:
+  rootPassword:
+  database: coffee_shop
+  user:
+  password:
+  containerPort: 3306
