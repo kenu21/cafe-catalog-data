@@ -16,16 +16,12 @@ services:
       - cafenet
 
   flyway:
-    image: flyway/flyway:11.17.2-alpine
+    image: kenu21/flyway:latest
     container_name: flyway-cafee
     environment:
       FLYWAY_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
       FLYWAY_USER: ${MYSQL_USER}
       FLYWAY_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - ./flyway/sql:/flyway/sql
-      - ./flyway/conf:/flyway/conf
-      - ./flyway/csv:/flyway/csv
     depends_on:
       - db
     networks:

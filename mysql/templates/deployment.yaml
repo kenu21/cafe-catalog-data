@@ -40,7 +40,7 @@ spec:
           ports:
             - containerPort: {{ .Values.mysql.containerPort }}
         - name: flyway
-          image: flyway/flyway:11.17.2-alpine
+          image: kenu21/flyway:latest
           env:
             - name: FLYWAY_URL
               value: jdbc:mysql://localhost:{{ .Values.mysql.containerPort }}/{{ .Values.mysql.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
@@ -48,21 +48,4 @@ spec:
               value: {{ .Values.mysql.user }}
             - name: FLYWAY_PASSWORD
               value: {{ .Values.mysql.password }}
-          volumeMounts:
-            - name: flyway-sql
-              mountPath: /flyway/sql
-            - name: flyway-conf
-              mountPath: /flyway/conf
-            - name: flyway-csv
-              mountPath: /flyway/csv
           command: ["migrate"]
-      volumes:
-        - name: flyway-sql
-          hostPath:
-            path: ./flyway/sql
-        - name: flyway-conf
-          hostPath:
-            path: ./flyway/conf
-        - name: flyway-csv
-          hostPath:
-            path: ./flyway/csv
