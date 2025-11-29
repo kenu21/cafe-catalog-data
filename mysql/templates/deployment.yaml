@@ -13,6 +13,15 @@ spec:
       labels:
         app: cafee-mysql
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingRequiredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: network
+                operator: In
+                values:
+                - private
       containers:
         - name: mysql
           image: mysql:8.0.44-debian
