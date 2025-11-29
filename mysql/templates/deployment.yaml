@@ -18,10 +18,10 @@ spec:
           requiredDuringSchedulingRequiredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: network
+              - key: role
                 operator: In
                 values:
-                - private
+                - db
       containers:
         - name: mysql
           image: mysql:8.0.44-debian
