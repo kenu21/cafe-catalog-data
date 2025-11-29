@@ -48,4 +48,4 @@ spec:
               value: {{ .Values.mysql.user }}
             - name: FLYWAY_PASSWORD
               value: {{ .Values.mysql.password }}
-          command: ["migrate"]
+          command: ["flyway", "migrate"]

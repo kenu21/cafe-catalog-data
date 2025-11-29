@@ -26,7 +26,7 @@ services:
       - db
     networks:
       - cafenet
-    command: ["migrate"]
+    command: ["flyway", "migrate"]
 
 networks:
   cafenet:
