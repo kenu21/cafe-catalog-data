@@ -36,7 +36,7 @@ jobs:
 
       - name: Deploy MySQL & Flyway
         run: |
-          helm upgrade --install cafee-mysql charts/cafee-mysql \
+          helm upgrade --install cafee-mysql ./mysql \
             --set mysql.rootPassword=${{ secrets.MYSQL_ROOT_PASSWORD }} \
             --set mysql.user=${{ secrets.MYSQL_USER }} \
             --set mysql.password=${{ secrets.MYSQL_PASSWORD }}
