@@ -39,13 +39,3 @@ spec:
             - "--local-infile=1"
           ports:
             - containerPort: {{ .Values.mysql.containerPort }}
-        - name: flyway
-          image: kenu21/flyway:latest
-          env:
-            - name: FLYWAY_URL
-              value: jdbc:mysql://localhost:{{ .Values.mysql.containerPort }}/{{ .Values.mysql.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
-            - name: FLYWAY_USER
-              value: {{ .Values.mysql.user }}
-            - name: FLYWAY_PASSWORD
-              value: {{ .Values.mysql.password }}
-          command: ["flyway", "migrate"]
