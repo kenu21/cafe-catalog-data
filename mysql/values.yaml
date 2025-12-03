@@ -6,3 +6,7 @@ mysql:
   user:
   password:
   containerPort: 3306
+flyway:
+  image:
+    repository: kenu21/flyway
+    tag:

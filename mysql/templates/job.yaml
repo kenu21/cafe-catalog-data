@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
       - name: flyway
-        image: kenu21/flyway:latest
+        image: "{{ .Values.flyway.image.repository }}:{{ .Values.flyway.image.tag }}"
         command: ["flyway", "migrate"]
         env:
         - name: FLYWAY_URL
