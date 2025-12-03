@@ -16,6 +16,7 @@ services:
       - cafenet
 
   flyway:
+    build: .
     image: kenu21/flyway:latest
     container_name: flyway-cafee
     environment:
