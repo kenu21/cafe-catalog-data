@@ -2,14 +2,17 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: flyway-migrate
-  namespace: mysql-ns
+  namespace: {{ .Values.namespaceName }}
+  annotations:
+    "helm.sh/hook": pre-upgrade,pre-install
+    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   backoffLimit: 10
   template:
     spec:
       containers:
       - name: flyway
-        image: kenu21/flyway:latest
+        image: "{{ .Values.flyway.image.repository }}:{{ .Values.flyway.image.tag }}"
         command: ["flyway", "migrate"]
         env:
         - name: FLYWAY_URL
