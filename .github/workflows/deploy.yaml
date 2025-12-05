@@ -53,6 +53,6 @@ jobs:
         run: |
           helm upgrade --install cafee-mysql ./mysql \
             --set flyway.image.tag=${{ github.sha }} \
-            --set mysql.rootPassword=${{ secrets.MYSQL_ROOT_PASSWORD }} \
-            --set mysql.user=${{ secrets.MYSQL_USER }} \
-            --set mysql.password=${{ secrets.MYSQL_PASSWORD }}
+            --set mysql.containers.rootPassword=${{ secrets.MYSQL_ROOT_PASSWORD }} \
+            --set mysql.containers.user=${{ secrets.MYSQL_USER }} \
+            --set mysql.containers.password=${{ secrets.MYSQL_PASSWORD }}
