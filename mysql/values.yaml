@@ -1,12 +1,27 @@
 namespaceName: mysql-ns
 
 mysql:
-  rootPassword:
-  database: coffee_shop
-  user:
-  password:
-  containerPort: 3306
+  replicas: 1
+  label: mysql-cafe-label
+  name: mysql-cafe
+  containers:
+    name: mysql
+    image: mysql:8.0.44-debian
+    database: coffee_shop
+    rootPassword:
+    user:
+    password:
+    containerPort: 3306
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 2
+  protocol: TCP
+
 flyway:
-  image:
-    repository: kenu21/flyway
-    tag:
+  containers:
+    name: flyway
+    backoffLimit: 10
+    restartPolicy: OnFailure
+    image:
+      repository: kenu21/flyway
+      tag:

@@ -7,18 +7,19 @@ metadata:
     "helm.sh/hook": pre-upgrade,pre-install
     "helm.sh/hook-delete-policy": before-hook-creation
 spec:
-  backoffLimit: 10
+  backoffLimit: {{ .Values.flyway.containers.backoffLimit }}
   template:
     spec:
       containers:
-      - name: flyway
-        image: "{{ .Values.flyway.image.repository }}:{{ .Values.flyway.image.tag }}"
+      - name: {{ .Values.flyway.containers.name }}
+        image: "{{ .Values.flyway.containers.image.repository }}:{{ .Values.flyway.containers.image.tag }}"
         command: ["flyway", "migrate"]
         env:
         - name: FLYWAY_URL
-          value: jdbc:mysql://cafee-mysql:3306/coffee_shop?allowPublicKeyRetrieval=true&useSSL=false
+          value: >
+            jdbc:mysql://{{ .Values.mysql.name }}:{{ .Values.mysql.containers.containerPort }}/{{ .Values.mysql.containers.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
         - name: FLYWAY_USER
-          value: barista
+          value: {{ .Values.mysql.containers.user }}
         - name: FLYWAY_PASSWORD
-          value: espresso1
-      restartPolicy: OnFailure
+          value: {{ .Values.mysql.containers.password }}
+      restartPolicy: {{ .Values.flyway.containers.restartPolicy }}
