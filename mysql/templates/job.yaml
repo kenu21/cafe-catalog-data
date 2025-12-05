@@ -17,7 +17,7 @@ spec:
         env:
         - name: FLYWAY_URL
           value: >
-            jdbc:mysql://{{ .Values.mysql.name }}:{{ .Values.mysql.containers.containerPort }}/{{ .Values.mysql.containers.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
+            jdbc:mysql://cafee-mysql:{{ .Values.mysql.containers.containerPort }}/{{ .Values.mysql.containers.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
         - name: FLYWAY_USER
           value: {{ .Values.mysql.containers.user }}
         - name: FLYWAY_PASSWORD
