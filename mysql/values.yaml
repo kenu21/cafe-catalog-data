@@ -2,7 +2,8 @@ namespaceName: mysql-ns
 
 mysql:
   replicas: 1
-  label: cafee-mysql
+  label: cafee-mysql-label
+  name: cafee-mysql
   containers:
     name: mysql
     image: mysql:8.0.44-debian

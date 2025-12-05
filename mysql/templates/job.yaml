@@ -18,7 +18,7 @@ spec:
           - -c
           - |
             echo "Waiting for MySQL to be ready..."
-            until mysqladmin ping -h {{ .Values.mysql.label }} -u {{ .Values.mysql.containers.user }} -p{{ .Values.mysql.containers.password }} --silent; do
+            until mysqladmin ping -h {{ .Values.mysql.name }} -u {{ .Values.mysql.containers.user }} -p{{ .Values.mysql.containers.password }} --silent; do
               echo "MySQL is unavailable - sleeping 5s"
               sleep 5
             done
@@ -27,7 +27,7 @@ spec:
         env:
         - name: FLYWAY_URL
           value: >
-            jdbc:mysql://{{ .Values.mysql.label }}:{{ .Values.mysql.containers.containerPort }}/{{ .Values.mysql.containers.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
+            jdbc:mysql://{{ .Values.mysql.name }}:{{ .Values.mysql.containers.containerPort }}/{{ .Values.mysql.containers.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
         - name: FLYWAY_USER
           value: {{ .Values.mysql.containers.user }}
         - name: FLYWAY_PASSWORD
