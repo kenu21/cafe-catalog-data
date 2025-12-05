@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cafee-mysql
+  name: {{ .Values.mysql.name }}
   namespace: {{ .Values.namespaceName }}
 spec:
   selector:
-    app: cafee-mysql
+    app: {{ .Values.mysql.label }}
   ports:
-    - protocol: TCP
-      port: {{ .Values.mysql.containerPort }}
-      targetPort: {{ .Values.mysql.containerPort }}
+    - protocol: {{ .Values.mysql.protocol }}
+      port: {{ .Values.mysql.containers.containerPort }}
+      targetPort: {{ .Values.mysql.containers.containerPort }}
   type: ClusterIP

@@ -4,14 +4,14 @@ metadata:
   name: cafee-mysql-deployment
   namespace: {{ .Values.namespaceName }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.mysql.replicas }}
   selector:
     matchLabels:
-      app: cafee-mysql
+      app: {{ .Values.mysql.label }}
   template:
     metadata:
       labels:
-        app: cafee-mysql
+        app: {{ .Values.mysql.label }}
     spec:
       affinity:
         nodeAffinity:
@@ -23,19 +23,28 @@ spec:
                 values:
                 - db
       containers:
-        - name: mysql
-          image: mysql:8.0.44-debian
+        - name: {{ .Values.mysql.containers.name }}
+          image: {{ .Values.mysql.containers.image }}
           env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: {{ .Values.mysql.rootPassword }}
             - name: MYSQL_DATABASE
-              value: {{ .Values.mysql.database }}
+              value: {{ .Values.mysql.containers.database }}
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.mysql.containers.rootPassword}}
             - name: MYSQL_USER
-              value: {{ .Values.mysql.user }}
+              value: {{ .Values.mysql.containers.user }}
             - name: MYSQL_PASSWORD
-              value: {{ .Values.mysql.password }}
+              value: {{ .Values.mysql.containers.password }}
           args:
             - "--default-authentication-plugin=mysql_native_password"
             - "--local-infile=1"
           ports:
-            - containerPort: {{ .Values.mysql.containerPort }}
+            - containerPort: {{ .Values.mysql.containers.containerPort }}
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "mysqladmin ping -h localhost -u root -p{{ .Values.mysql.containers.rootPassword }}"
+            initialDelaySeconds: {{ .Values.mysql.containers.initialDelaySeconds }}
+            periodSeconds: {{ .Values.mysql.containers.periodSeconds }}
+            timeoutSeconds: {{ .Values.mysql.containers.timeoutSeconds }}
