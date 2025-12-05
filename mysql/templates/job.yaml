@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.flyway.containers.name }}
-        image: "{{ .Values.flyway.image.repository }}:{{ .Values.flyway.image.tag }}"
+        image: "{{ .Values.flyway.containers.image.repository }}:{{ .Values.flyway.containers.image.tag }}"
         command:
           - sh
           - -c

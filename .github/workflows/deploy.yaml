@@ -52,7 +52,7 @@ jobs:
       - name: Deploy MySQL & Flyway
         run: |
           helm upgrade --install cafee-mysql ./mysql \
-            --set flyway.image.tag=${{ github.sha }} \
+            --set flyway.containers.image.tag=${{ github.sha }} \
             --set mysql.containers.rootPassword=${{ secrets.MYSQL_ROOT_PASSWORD }} \
             --set mysql.containers.user=${{ secrets.MYSQL_USER }} \
             --set mysql.containers.password=${{ secrets.MYSQL_PASSWORD }}
