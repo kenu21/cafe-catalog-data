@@ -22,5 +22,5 @@ flyway:
     backoffLimit: 10
     restartPolicy: OnFailure
     image:
-    repository: kenu21/flyway
-    tag:
+      repository: kenu21/flyway
+      tag:
