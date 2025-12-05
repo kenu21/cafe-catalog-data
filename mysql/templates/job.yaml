@@ -1,25 +1,25 @@
-# apiVersion: batch/v1
-# kind: Job
-# metadata:
-#   name: flyway-migrate
-#   namespace: {{ .Values.namespaceName }}
-#   annotations:
-#     "helm.sh/hook": pre-upgrade,pre-install
-#     "helm.sh/hook-delete-policy": before-hook-creation
-# spec:
-#   backoffLimit: {{ .Values.flyway.containers.backoffLimit }}
-#   template:
-#     spec:
-#       containers:
-#       - name: {{ .Values.flyway.containers.name }}
-#         image: "{{ .Values.flyway.containers.image.repository }}:{{ .Values.flyway.containers.image.tag }}"
-#         command: ["flyway", "migrate"]
-#         env:
-#         - name: FLYWAY_URL
-#           value: >
-#             jdbc:mysql://{{ .Values.mysql.name }}:{{ .Values.mysql.containers.containerPort }}/{{ .Values.mysql.containers.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
-#         - name: FLYWAY_USER
-#           value: {{ .Values.mysql.containers.user }}
-#         - name: FLYWAY_PASSWORD
-#           value: {{ .Values.mysql.containers.password }}
-#       restartPolicy: {{ .Values.flyway.containers.restartPolicy }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flyway-migrate
+  namespace: {{ .Values.namespaceName }}
+  annotations:
+    "helm.sh/hook": pre-upgrade,pre-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  backoffLimit: {{ .Values.flyway.containers.backoffLimit }}
+  template:
+    spec:
+      containers:
+      - name: {{ .Values.flyway.containers.name }}
+        image: "{{ .Values.flyway.containers.image.repository }}:{{ .Values.flyway.containers.image.tag }}"
+        command: ["flyway", "migrate"]
+        env:
+        - name: FLYWAY_URL
+          value: >
+            jdbc:mysql://{{ .Values.mysql.name }}:{{ .Values.mysql.containers.containerPort }}/{{ .Values.mysql.containers.database }}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
+        - name: FLYWAY_USER
+          value: {{ .Values.mysql.containers.user }}
+        - name: FLYWAY_PASSWORD
+          value: {{ .Values.mysql.containers.password }}
+      restartPolicy: {{ .Values.flyway.containers.restartPolicy }}
