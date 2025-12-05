@@ -51,6 +51,7 @@ jobs:
 
       - name: Deploy MySQL & Flyway
         run: |
+          kubectl get namespace mysql-ns || kubectl create namespace mysql-ns
           helm upgrade --install mysql-cafe ./mysql \
             --set flyway.containers.image.tag=${{ github.sha }} \
             --set mysql.containers.rootPassword=${{ secrets.MYSQL_ROOT_PASSWORD }} \
