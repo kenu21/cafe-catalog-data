@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8.0.44-debian
-    container_name: mysql-db-cafee
+    container_name: mysql-db-cafe
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -18,7 +18,7 @@ services:
   flyway:
     build: .
     image: kenu21/flyway:latest
-    container_name: flyway-cafee
+    container_name: flyway-cafe
     environment:
       FLYWAY_URL: jdbc:mysql://db:${MYSQL_CONTAINER_PORT}/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
       FLYWAY_USER: ${MYSQL_USER}
@@ -27,14 +27,7 @@ services:
       - db
     networks:
       - cafenet
-    command: >
-      sh -c "echo 'Waiting for MySQL to be ready...';
-      until mysqladmin ping -h db -u ${MYSQL_USER} -p${MYSQL_PASSWORD} --silent; do
-      echo 'MySQL is unavailable - sleeping 5s';
-      sleep 5;
-      done;
-      echo 'MySQL is ready - running Flyway migrations';
-      flyway migrate"
+    command: ["migrate"]
 
 networks:
   cafenet:
