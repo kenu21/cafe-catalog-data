@@ -23,5 +23,5 @@ docker compose up -d
 After that, you can connect to the database using the following command:
 
 ```bash
-docker exec -it mysql-db-cafe mysql -u <your_user> -p<your_pass> coffee_shop
+docker exec -it cafe-mysql-container mysql -u <your_user> -p<your_pass> coffee_shop
 ```

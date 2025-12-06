@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8.0.44-debian
-    container_name: mysql-db-cafe
+    container_name: cafe-mysql-container
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -17,8 +17,8 @@ services:
 
   flyway:
     build: .
-    image: kenu21/flyway:latest
-    container_name: flyway-cafe
+    image: cafe-flyway-image:latest
+    container_name: cafe-flyway-container
     environment:
       FLYWAY_URL: jdbc:mysql://db:${MYSQL_CONTAINER_PORT}/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&allowLoadLocalInfile=true&allowLocalInfile=true
       FLYWAY_USER: ${MYSQL_USER}
