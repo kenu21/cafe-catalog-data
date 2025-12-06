@@ -5,7 +5,7 @@ mysql:
   label: mysql-cafe-label
   name: mysql-cafe
   containers:
-    name: mysql
+    name: cafe-mysql-container
     image: mysql:8.0.44-debian
     database: coffee_shop
     rootPassword:
@@ -19,9 +19,9 @@ mysql:
 
 flyway:
   containers:
-    name: flyway
+    name: cafe-flyway-container
     backoffLimit: 10
     restartPolicy: OnFailure
     image:
-      repository: kenu21/flyway
+      repository: kenu21/cafe-flyway-image
       tag:

@@ -4,7 +4,7 @@ metadata:
   name: flyway-migrate
   namespace: {{ .Values.namespaceName }}
   annotations:
-    "helm.sh/hook": pre-upgrade,pre-install
+    "helm.sh/hook": post-upgrade,post-install
     "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   backoffLimit: {{ .Values.flyway.containers.backoffLimit }}

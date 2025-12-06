@@ -27,12 +27,12 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t kenu21/flyway:${{ github.sha }} -t kenu21/flyway:latest .
+          docker build -t kenu21/cafe-flyway-image:${{ github.sha }} -t kenu21/cafe-flyway-image:latest .
 
       - name: Push Docker image
         run: |
-          docker push kenu21/flyway:${{ github.sha }}
-          docker push kenu21/flyway:latest
+          docker push kenu21/cafe-flyway-image:${{ github.sha }}
+          docker push kenu21/cafe-flyway-image:latest
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -51,7 +51,6 @@ jobs:
 
       - name: Deploy MySQL & Flyway
         run: |
-          kubectl get namespace mysql-ns || kubectl create namespace mysql-ns
           helm upgrade --install mysql-cafe ./mysql \
             --set flyway.containers.image.tag=${{ github.sha }} \
             --set mysql.containers.rootPassword=${{ secrets.MYSQL_ROOT_PASSWORD }} \

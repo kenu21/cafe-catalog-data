@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cafee-mysql-deployment
+  name: mysql-cafe-deployment
   namespace: {{ .Values.namespaceName }}
 spec:
   replicas: {{ .Values.mysql.replicas }}
