@@ -1,0 +1,10 @@
+UPDATE cafes SET created_at = '2025-12-18 10:34:12' WHERE id = 7;
+UPDATE cafes SET created_at = '2025-12-19 14:12:45' WHERE id = 8;
+UPDATE cafes SET created_at = '2025-12-20 09:50:33' WHERE id = 9;
+UPDATE cafes SET created_at = '2025-12-21 11:22:18' WHERE id = 10;
+UPDATE cafes SET created_at = '2025-12-22 16:40:59' WHERE id = 11;
+UPDATE cafes SET created_at = '2025-12-23 12:11:07' WHERE id = 12;
+UPDATE cafes SET created_at = '2025-12-24 08:25:41' WHERE id = 13;
+UPDATE cafes SET created_at = '2025-12-25 19:37:29' WHERE id = 14;
+UPDATE cafes SET created_at = '2025-12-26 13:05:50' WHERE id = 15;
+UPDATE cafes SET created_at = '2025-12-27 17:48:16' WHERE id = 16;
