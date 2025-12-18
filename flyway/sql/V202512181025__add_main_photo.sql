@@ -1,0 +1,2 @@
+ALTER TABLE cafes
+ADD COLUMN main_photo_id BIGINT UNSIGNED NULL;
